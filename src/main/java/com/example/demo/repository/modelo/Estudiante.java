@@ -32,6 +32,9 @@ public class Estudiante {
 	@Column(name = "estu_fecha_nacimiento")
 	private LocalDateTime fechaNacimiento;
 	
+	@Column(name = "estu_provincia")
+	private String provincia;
+	
 	//SET Y GET
 	public Integer getId() {
 	
@@ -65,6 +68,12 @@ public class Estudiante {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 	
+	public String getProvincia() {
+		return provincia;
+	}
+	public void setProvincia(String provincia) {
+		this.provincia = provincia;
+	}
 	@Override
 	public String toString() {
 		return "Estudiante [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", cedula=" + cedula
