@@ -28,35 +28,35 @@ public class EstudianteControllerRestFul {
 	private IEstudianteService estudianteService;
 	
 	//GET
-	@GetMapping(path="/buscar/{cedula}")
+	@GetMapping(path="/{cedula}")
 	public Estudiante consultarPorCedula(@PathVariable String cedula) {
 		return this.estudianteService.consultarPorCedula(cedula);
 	}
 	
-	@GetMapping(path="/buscarTodos")
-	public List<Estudiante> buscarTodos(@RequestParam String provincia){
+	@GetMapping
+	public List<Estudiante> buscarTodos(){
 		//buscarTodos?provincia=pichincha
 		return this.estudianteService.buscarTodos();
 	}
 	
 	//POST
-	@PostMapping(path="/guardar")
+	//No hace falta identificador ya que un POST siempre crea un solo recurso no varios
+	@PostMapping
 	public void guardar(@RequestBody Estudiante estudiante) {
 		this.estudianteService.guardar(estudiante);
 	}
 	
 	//PUT
-	@PutMapping(path="/actualizar/{identificador}")
+	@PutMapping(path="/{identificador}")
 	public void actualizar(@RequestBody Estudiante estudiante, @PathVariable Integer identificador) {
 		estudiante.setId(identificador);
 		this.estudianteService.actualizar(estudiante);
 	}
 	
 	//PATCH
-	@PatchMapping(path="/actualizarParcial/{identificador}/{cedula}")
-	public void actualizarParcial(@RequestBody Estudiante estudiante,
-			@PathVariable Integer identificador,
-			@PathVariable String cedula) {
+	@PatchMapping(path="/{identificador}")
+	public void actualizarParcial(@RequestBody Estudiante estudiante, @PathVariable Integer identificador) {
+		String cedula = "4444444";
 		estudiante.setId(identificador);
 		Estudiante estu1 = this.estudianteService.consultarPorCedula(cedula);
 		estu1.setCedula(estudiante.getCedula());
@@ -64,7 +64,7 @@ public class EstudianteControllerRestFul {
 	}
 	
 	//DELETE
-	@DeleteMapping(path="/borrar/{id}")
+	@DeleteMapping(path="/{id}")
 	public void borrar(@PathVariable Integer id) {
 		this.estudianteService.eliminar(id);
 	}

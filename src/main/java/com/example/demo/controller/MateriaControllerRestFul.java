@@ -24,7 +24,7 @@ public class MateriaControllerRestFul {
 	private IMateriaService materiaService;
 	
 	//GET
-	@GetMapping(path="/buscar/{codigo}")
+	@GetMapping(path="/{codigo}")
 	public Materia consultarPorCodigo(@PathVariable String codigo) {
 		return this.materiaService.consultarPorCodigo(codigo);
 	}
