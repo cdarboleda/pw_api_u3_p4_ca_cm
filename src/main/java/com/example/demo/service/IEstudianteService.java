@@ -10,5 +10,6 @@ public interface IEstudianteService {
 	public void actualizar(Estudiante estudiante);
 	public void eliminar(Integer id);
 	public List<Estudiante> buscarTodos();
+	void actualizarParcial(String cedulaActual, String cedulaNueva);
 	
 }

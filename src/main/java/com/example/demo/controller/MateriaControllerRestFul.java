@@ -3,6 +3,9 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -25,11 +28,11 @@ public class MateriaControllerRestFul {
 	
 	//GET
 	@GetMapping(path="/{codigo}")
-	public Materia consultarPorCodigo(@PathVariable String codigo) {
-		return this.materiaService.consultarPorCodigo(codigo);
+	public ResponseEntity<Materia> consultarPorCodigo(@PathVariable String codigo) {
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(this.materiaService.consultarPorCodigo(codigo));
 	}
 	
-	@GetMapping(path="/buscarTodos")
+	@GetMapping()
 	public List<Materia> buscarTodos(){
 		//buscarTodos?provincia=pichincha
 		return this.materiaService.buscarTodos();

@@ -31,6 +31,12 @@ public class EstudianteServiceImpl implements IEstudianteService{
 		// TODO Auto-generated method stub
 		this.estudianteRepository.actualizar(estudiante);
 	}
+	
+	@Override
+	public void actualizarParcial(String cedulaActual, String cedulaNueva) {
+		// TODO Auto-generated method stub
+		this.estudianteRepository.actualizarParcial(cedulaActual, cedulaNueva);
+	}
 
 	@Override
 	public void eliminar(Integer id) {
