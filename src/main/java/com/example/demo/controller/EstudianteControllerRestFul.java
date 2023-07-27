@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,6 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.repository.modelo.Estudiante;
 import com.example.demo.service.IEstudianteService;
+import com.example.demo.service.to.EstudianteTO;
+import com.example.demo.service.to.MateriaTO;
+
+//Importacion estática
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;;
 
 //Este es el servicio llamado estudiantes (clase controller)
 //Con la capacidad de buscar (el metodo de la clase)=
@@ -58,6 +65,7 @@ public class EstudianteControllerRestFul {
 		this.estudianteService.guardar(estudiante);
 	}
 	
+	//Aqui el path no deberia ser un verbo, solo es didactico
 	@PostMapping(path="/guardar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
 	public Estudiante guardar2(@RequestBody Estudiante estudiante) {
 		this.estudianteService.guardar(estudiante);
@@ -83,6 +91,26 @@ public class EstudianteControllerRestFul {
 	@DeleteMapping(path="/{id}")
 	public void borrar(@PathVariable Integer id) {
 		this.estudianteService.eliminar(id);
+	}
+	
+	@GetMapping(path="/hateoas")//path didactico, no se debe usar verbos
+	public ResponseEntity<List<EstudianteTO>> consultarTodosHATEOAS(){
+		List<EstudianteTO> lista = this.estudianteService.buscarTodosHATEOAS();
+		//link de hypermedia para cada objeto
+		for(EstudianteTO e: lista) {
+			Link myLink = linkTo(methodOn(EstudianteControllerRestFul.class)
+					.buscarPorEstudiante(e.getCedula()))
+					.withRel("materias");
+			
+			e.add(myLink);
+			
+		}
+		return new ResponseEntity<>(lista, null, 200);
+	}
+	
+	@GetMapping(path="/{cedula}/materias")
+	public ResponseEntity<List<MateriaTO>> buscarPorEstudiante(@PathVariable String cedula){
+		return null;
 	}
 	
 

@@ -70,6 +70,5 @@ public class EstudianteRepositoryImpl implements IEstudianteRepository{
         return myQuery.getResultList();
 	}
 	
-	
 
 }
