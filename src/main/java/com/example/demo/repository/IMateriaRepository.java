@@ -13,5 +13,6 @@ public interface IMateriaRepository {
 	public void borrar(Integer id);
 	public Materia buscarPorId(Integer id);
 	public void actualizarParcial(String codigoActual, String codigoNuevo);
+	public List<Materia> buscarPorCedulaEstudiante(String cedula);
 
 }
