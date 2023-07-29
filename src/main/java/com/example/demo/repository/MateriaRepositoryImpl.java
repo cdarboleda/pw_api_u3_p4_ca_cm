@@ -18,15 +18,6 @@ public class MateriaRepositoryImpl implements IMateriaRepository{
 
 	@PersistenceContext
 	private EntityManager entityManager;
-	
-	@Override
-	public Materia seleccionarPorCodigo(String codigo) {
-		// TODO Auto-generated method stub
-		String sql = "SELECT m FROM Materia m WHERE m.codigo = :codigo";
-		TypedQuery<Materia> myQuery = this.entityManager.createQuery(sql, Materia.class);
-		myQuery.setParameter("codigo", codigo);
-		return myQuery.getSingleResult();
-	}
 
 	@Override
 	public void insertar(Materia materia) {
@@ -61,12 +52,12 @@ public class MateriaRepositoryImpl implements IMateriaRepository{
 	}
 
 	@Override
-	public void actualizarParcial(String codigoActual, String codigoNuevo) {
+	public void actualizarParcial(Integer id, String nuevoNombre) {
 		// TODO Auto-generated method stub
-		String sql = "UPDATE Materia m SET m.codigo = :datoCodigo WHERE m.codigo = :datoCondicion";
+		String sql = "UPDATE Materia m SET m.nombre = :nuevoNombre WHERE m.id = :id";
 		Query myQuery = this.entityManager.createQuery(sql);
-		myQuery.setParameter("datoCondicion", codigoActual);
-		myQuery.setParameter("datoCodigo", codigoNuevo);
+		myQuery.setParameter("id", id);
+		myQuery.setParameter("nuevoNombre", nuevoNombre);
 		myQuery.executeUpdate();
 		
 	}

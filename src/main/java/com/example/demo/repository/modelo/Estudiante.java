@@ -3,6 +3,8 @@ package com.example.demo.repository.modelo;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,6 +16,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="estudiante")
+@JsonIgnoreProperties(value = "materias") //Para cuando buscamos todos y no sean TO no nos de dependencia ciclica
 public class Estudiante {
 	
 	@Id

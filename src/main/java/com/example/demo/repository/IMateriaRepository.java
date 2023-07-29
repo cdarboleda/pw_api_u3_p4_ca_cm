@@ -6,13 +6,12 @@ import com.example.demo.repository.modelo.Materia;
 
 public interface IMateriaRepository {
 	
-	public Materia seleccionarPorCodigo(String codigo);
+	public Materia buscarPorId(Integer id);
 	public void insertar(Materia materia);
 	public List<Materia> seleccionarTodos();
 	public void actualizar(Materia materia);
 	public void borrar(Integer id);
-	public Materia buscarPorId(Integer id);
-	public void actualizarParcial(String codigoActual, String codigoNuevo);
+	public void actualizarParcial(Integer id, String nuevoNombre);
 	public List<Materia> buscarPorCedulaEstudiante(String cedula);
 
 }

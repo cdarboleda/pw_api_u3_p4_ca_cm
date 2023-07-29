@@ -21,12 +21,6 @@ public class Materia {
 	private Integer id;
 	@Column(name = "mate_nombre")
 	private String nombre;
-	@Column(name = "mate_aula")
-	private String aula;
-	@Column(name = "mate_horas")
-	private Integer horas;
-	@Column(name = "mate_codigo")
-	private String codigo;
 	@Column(name = "mate_numero_creditos")
 	private Integer numeroCreditos;
 	
@@ -47,25 +41,6 @@ public class Materia {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getAula() {
-		return aula;
-	}
-	public void setAula(String aula) {
-		this.aula = aula;
-	}
-	public Integer getHoras() {
-		return horas;
-	}
-	public void setHoras(Integer horas) {
-		this.horas = horas;
-	}
-	
-	public void setCodigo(String codigo) {
-		this.codigo= codigo;
-	}
-	public String getCodigo() {
-		return codigo;
-	}
 	
 	public Integer getNumeroCreditos() {
 		return numeroCreditos;
@@ -74,19 +49,11 @@ public class Materia {
 		this.numeroCreditos = numeroCreditos;
 	}
 	
-	
 	public Estudiante getEstudiante() {
 		return estudiante;
 	}
 	public void setEstudiante(Estudiante estudiante) {
 		this.estudiante = estudiante;
 	}
-	@Override
-	public String toString() {
-		return "Materia [id=" + id + ", codigo= "+codigo+", nombre=" + nombre + ", aula=" + aula + ", horas=" + horas + "]";
-	}
-	
-
-	
 
 }

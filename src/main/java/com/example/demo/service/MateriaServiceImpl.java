@@ -15,12 +15,6 @@ public class MateriaServiceImpl implements IMateriaService{
 
 	@Autowired
 	private IMateriaRepository materiaRepository;
-	
-	@Override
-	public Materia consultarPorCodigo(String codigo) {
-		// TODO Auto-generated method stub
-		return this.materiaRepository.seleccionarPorCodigo(codigo);
-	}
 
 	@Override
 	public void guardar(Materia materia) {

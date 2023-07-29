@@ -1,5 +1,9 @@
 package com.example.demo.controller;
 
+//Importacion estática
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -23,17 +28,14 @@ import com.example.demo.repository.modelo.Estudiante;
 import com.example.demo.service.IEstudianteService;
 import com.example.demo.service.IMateriaService;
 import com.example.demo.service.to.EstudianteTO;
-import com.example.demo.service.to.MateriaTO;
-
-//Importacion estática
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;;
+import com.example.demo.service.to.MateriaTO;;
 
 //Este es el servicio llamado estudiantes (clase controller)
 //Con la capacidad de buscar (el metodo de la clase)=
 
 @RestController
 @RequestMapping("/estudiantes")
+@CrossOrigin
 public class EstudianteControllerRestFul {
 	
 	@Autowired
@@ -113,9 +115,16 @@ public class EstudianteControllerRestFul {
 	
 	@GetMapping(path="/{cedula}/materias", produces =MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<MateriaTO>> buscarPorEstudiante(@PathVariable String cedula){
+		List<MateriaTO> lista = this.materiaService.buscarPorCedulaEstudiante(cedula);
+		for(MateriaTO m: lista) {
+			Link myLink = linkTo(methodOn(MateriaControllerRestFul.class)
+					.consultarPorIdTO(m.getId()))
+					.withSelfRel();
+			
+			m.add(myLink);
+		}
 		
-		
-		return new ResponseEntity<>(this.materiaService.buscarPorCedulaEstudiante(cedula), null, 200);
+		return new ResponseEntity<>(lista, null, 200);
 	}
 	
 

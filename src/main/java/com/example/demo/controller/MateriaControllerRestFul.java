@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,31 +32,21 @@ public class MateriaControllerRestFul {
 	private IMateriaService materiaService;
 
 	/*
-	 * //GET
-	 * 
-	 * @GetMapping(path="/{codigo}") public ResponseEntity<Materia>
-	 * consultarPorCodigo(@PathVariable String codigo) { return
-	 * ResponseEntity.status(HttpStatus.ACCEPTED).body(this.materiaService.
-	 * consultarPorCodigo(codigo)); }
-	 */
-
-	// GET
-	@GetMapping(path="/{id}", produces =MediaType.APPLICATION_JSON_VALUE)
-	public void consultarPorIdHATEOAS() {
-		//MateriaTO = this.materiaService.bus
-		 //Link myLink = linkTo(methodOn(MateriaControllerRestFul.class)
-		 //.consultarPorId(e.getCedula())) .withRel("materias");
-		 
+	@GetMapping(path = "/{codigo}")
+	public ResponseEntity<Materia> consultarPorCodigo(@PathVariable String codigo) {
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(this.materiaService.consultarPorCodigo(codigo));
 	}
-	
+	*/
 
-  	@GetMapping(path="/{id}", produces =MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<MateriaTO> consultarPorId(@PathVariable Integer id){
-  		return new ResponseEntity<>(this.materiaService.buscarPorIdTO(id), null, 200);
+	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<MateriaTO> consultarPorIdTO(@PathVariable Integer id) {
+		MateriaTO materia = this.materiaService.buscarPorIdTO(id); // Link
+		//Link myLink = linkTo(methodOn(MateriaControllerRestFul.class).consultarPorIdTO(id)).withRel("materias");
+		//materia.add(myLink);
+		return new ResponseEntity<>(materia, null, 200);
 	}
- 
 
-	@GetMapping()
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Materia> buscarTodos() {
 		// buscarTodos?provincia=pichincha
 		return this.materiaService.buscarTodos();
@@ -79,7 +70,7 @@ public class MateriaControllerRestFul {
 	public void actualizarParcial(@RequestBody Materia materia, @PathVariable Integer identificador) {
 		materia.setId(identificador);
 		Materia mate1 = this.materiaService.buscarPorId(identificador);
-		mate1.setCodigo(materia.getCodigo());// solo le paso el codigo
+		mate1.setNombre(materia.getNombre());// solo le paso el nombre
 		this.materiaService.actualizar(mate1);
 	}
 
