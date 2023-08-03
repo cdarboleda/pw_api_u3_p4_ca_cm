@@ -45,8 +45,8 @@ public class EstudianteControllerRestFul {
 	
 	//Codigos de estado propios
 	//GET
-	@GetMapping(path="/{cedula}", produces = MediaType.APPLICATION_XML_VALUE)
-	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	@GetMapping(path="/{cedula}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(code = HttpStatus.ACCEPTED)
 	public Estudiante consultarPorCedula(@PathVariable String cedula) {
 		//return ResponseEntity.status(227).body(this.estudianteService.consultarPorCedula(cedula));
 		return this.estudianteService.consultarPorCedula(cedula);
@@ -65,13 +65,14 @@ public class EstudianteControllerRestFul {
 	
 	//POST
 	//No hace falta identificador ya que un POST siempre crea un solo recurso no varios
-	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE)
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+	
 	public void guardar(@RequestBody Estudiante estudiante) {
 		this.estudianteService.guardar(estudiante);
 	}
 	
 	//Aqui el path no deberia ser un verbo, solo es didactico
-	@PostMapping(path="/guardar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
+	@PostMapping(path="/guardar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Estudiante guardar2(@RequestBody Estudiante estudiante) {
 		this.estudianteService.guardar(estudiante);
 		return this.consultarPorCedula(estudiante.getCedula());
@@ -94,8 +95,10 @@ public class EstudianteControllerRestFul {
 	
 	//DELETE
 	@DeleteMapping(path="/{id}")
-	public void borrar(@PathVariable Integer id) {
+	public Estudiante borrar(@PathVariable Integer id) {
+		Estudiante est = this.estudianteService.buscarPorId(id);
 		this.estudianteService.eliminar(id);
+		return est;
 	}
 	
 	@GetMapping(path="/hateoas", produces = MediaType.APPLICATION_JSON_VALUE)//path didactico, no se debe usar verbos

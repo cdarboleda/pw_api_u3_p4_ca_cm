@@ -13,5 +13,5 @@ public interface IEstudianteService {
 	public List<Estudiante> buscarTodos();
 	void actualizarParcial(String cedulaActual, String cedulaNueva);
 	public List<EstudianteTO> buscarTodosHATEOAS();
-	
+	public Estudiante buscarPorId(Integer id);
 }
